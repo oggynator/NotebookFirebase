@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         notesList.setAdapter(adapter);
         db.setChangeListener(notes, adapter);
     }
-
+    //
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_list_menu, menu);
