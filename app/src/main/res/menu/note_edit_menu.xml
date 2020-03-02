@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/deleteMenu"
+        android:onClick="deleteNote"
+        android:title="Delete" />
+    <item
+        android:onClick="cancel"
+        android:title="Cancel" />
+</menu>
