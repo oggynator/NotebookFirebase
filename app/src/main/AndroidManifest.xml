@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".NoteEditActivity" android:parentActivityName=".NoteListActivity">
+        <activity android:name=".NoteEditActivity" android:parentActivityName=".MainActivity">
         </activity>
-        <activity android:name=".NoteListActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
