@@ -47,24 +47,13 @@ public class MainActivity extends AppCompatActivity {
         notesList.setAdapter(adapter);
         db.setChangeListener(notes, adapter);
     }
-    //
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_list_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        layoutManager.scrollToPosition(scrollPosition);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        scrollPosition = layoutManager.findFirstVisibleItemPosition();
-    }
 
     public void newNote(MenuItem menuItem) {
         startActivity(new Intent(this, NoteEditActivity.class));
