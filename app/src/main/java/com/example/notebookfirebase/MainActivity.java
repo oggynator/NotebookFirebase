@@ -27,7 +27,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int scrollPosition;
     private RecyclerView notesList;
     private MyRecycleViewAdapter adapter;
     private LinearLayoutManager layoutManager;
