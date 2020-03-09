@@ -22,6 +22,8 @@ public class FirestoreRepo {
     private final String notesToDatabase = "notes";
     private static FirestoreRepo instance = new FirestoreRepo();
 
+
+
     private FirestoreRepo() {
         this.firestore = FirebaseFirestore.getInstance();
     }

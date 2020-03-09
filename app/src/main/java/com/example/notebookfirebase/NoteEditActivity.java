@@ -2,9 +2,13 @@ package com.example.notebookfirebase;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +25,8 @@ public class NoteEditActivity extends AppCompatActivity {
     private TextView titleInput;
     private TextView contentInput;
     private FirestoreRepo db;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,24 @@ public class NoteEditActivity extends AppCompatActivity {
     public void deleteNote(MenuItem menuItem) {
         db.deleteNote(noteBeingEdited);
         finish();
+    }
+
+    public void dispatchTakePictureIntent(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageView =findViewById(R.id.photoView);
+            imageView.setImageBitmap(imageBitmap);
+        }
     }
 
     public void cancel(MenuItem menuItem) {
