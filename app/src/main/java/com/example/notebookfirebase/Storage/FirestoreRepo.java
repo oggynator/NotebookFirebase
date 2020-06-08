@@ -23,11 +23,12 @@ public class FirestoreRepo {
     private static FirestoreRepo instance = new FirestoreRepo();
 
 
-
+    //gets the instance of firestore belonging to this project, to be used in this class
     private FirestoreRepo() {
         this.firestore = FirebaseFirestore.getInstance();
     }
 
+    //Get the the instance of firestore
     public static FirestoreRepo getInstance() {
         return instance;
     }

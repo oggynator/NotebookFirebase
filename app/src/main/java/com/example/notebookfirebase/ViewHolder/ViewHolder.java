@@ -16,7 +16,7 @@ import com.example.notebookfirebase.R;
 import com.example.notebookfirebase.Storage.FirestoreRepo;
 
 import java.util.List;
-
+//Viewholder is the very object that represents each item in our collection and will be used to display it.
 public class ViewHolder extends RecyclerView.ViewHolder {
 
     private List<Note> notes;
@@ -35,9 +35,11 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         deleteButton = rowLayout.findViewById(R.id.deleteButton);
     }
 
+    //When the viewholder is initialised it will set the title text for the notes, and add onclick and onlongclick events to them.
     public void initViewHolder(final int position) {
         noteTitle.setText(notes.get(position).getTitle());
 
+        //Only works if there has been a long click on a note
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +50,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        //Open the noteedit activity and send the note_key as an extra, so the Noteedit activity knows which note to open
         rowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +60,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        //Makes the delete button visible
         rowLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

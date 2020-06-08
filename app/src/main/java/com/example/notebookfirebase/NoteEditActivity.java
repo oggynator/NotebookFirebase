@@ -24,18 +24,20 @@ public class NoteEditActivity extends AppCompatActivity {
     private Note noteBeingEdited;
     private TextView titleInput;
     private TextView contentInput;
-    private FirestoreRepo db;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView imageView;
+    private FirestoreRepo firestoreRepo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
+
         this.titleInput = findViewById(R.id.titleInput);
         this.contentInput = findViewById(R.id.contentInput);
-        this.db = FirestoreRepo.getInstance();
+        this.firestoreRepo = FirestoreRepo.getInstance();
 
+        //Gets the NOTE_KEY
+        //Sets title and the content from the note that was clicked
         Intent intent = getIntent();
         if (intent.hasExtra(NOTE_KEY)) {
             this.noteBeingEdited = (Note) intent.getSerializableExtra(NOTE_KEY);
@@ -45,9 +47,11 @@ public class NoteEditActivity extends AppCompatActivity {
             this.noteBeingEdited = new Note();
         }
 
+        //Provides us with the back button in the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //When the options button is clicked in the action bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -57,14 +61,14 @@ public class NoteEditActivity extends AppCompatActivity {
                 if (this.noteBeingEdited.isNew()) {
                     if (!(noteBeingEdited.getTitle().isEmpty() && noteBeingEdited.getContent().isEmpty())) {
                         if (noteBeingEdited.getTitle().isEmpty()) {
-                            noteBeingEdited.setTitle("Untitled note");
+                            noteBeingEdited.setTitle("Untitled note"); //If no title is put in
                         }
-                        db.addOrUpdateNote(this.noteBeingEdited);
+                        firestoreRepo.addOrUpdateNote(this.noteBeingEdited); //Save the note via the firestorerepo method addOrUpdateNote()
                     }
                 } else {
-                    db.addOrUpdateNote(this.noteBeingEdited);
+                    firestoreRepo.addOrUpdateNote(this.noteBeingEdited); //Save the updated note
                 }
-                finish();
+                finish(); //<-- finish the activity, we dont wan to return back to this activity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -84,28 +88,12 @@ public class NoteEditActivity extends AppCompatActivity {
     }
 
     public void deleteNote(MenuItem menuItem) {
-        db.deleteNote(noteBeingEdited);
+        firestoreRepo.deleteNote(noteBeingEdited);
         finish();
     }
 
-    public void dispatchTakePictureIntent(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView =findViewById(R.id.photoView);
-            imageView.setImageBitmap(imageBitmap);
-        }
-    }
-
+    //Finish activity without doing anything
     public void cancel(MenuItem menuItem) {
         finish();
     }

@@ -3,6 +3,7 @@ package com.example.notebookfirebase.Model;
 
 import java.io.Serializable;
 
+//The model that we want to get viewed a note with a title and content
 public class Note implements Serializable {
     private String id;
     private String title;
