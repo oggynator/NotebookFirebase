@@ -51,7 +51,7 @@ public class NoteEditActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    //When the options button is clicked in the action bar
+    //Saves the note when back is pressed
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -68,13 +68,15 @@ public class NoteEditActivity extends AppCompatActivity {
                 } else {
                     firestoreRepo.addOrUpdateNote(this.noteBeingEdited); //Save the updated note
                 }
-                finish(); //<-- finish the activity, we dont wan to return back to this activity
+                finish(); //<-- finish the activity, we dont want to return back to this activity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
+    //adds the options menu, adds the delete button if the note is not new
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.note_edit_menu, menu);
@@ -87,13 +89,14 @@ public class NoteEditActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    //Deletes note via the deleteNote() method and finish the activity, called in the menu with an onclick.
     public void deleteNote(MenuItem menuItem) {
         firestoreRepo.deleteNote(noteBeingEdited);
         finish();
     }
 
 
-    //Finish activity without doing anything
+    //Finish activity without doing anything, called in the menu with an onclick.
     public void cancel(MenuItem menuItem) {
         finish();
     }
